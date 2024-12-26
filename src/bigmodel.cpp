@@ -191,7 +191,7 @@ static void saveToObj(const std::string& filename, std::vector<float>& vertices,
                 << vertices[i + 1] << " " 
                 << vertices[i + 2] << "\n";
         
-        if (i % (1024 * 1024) == 0) printf("write: %lldm vertices\n", i / 1024 / 1024);
+        if (i % (1024 * 1024) == 0) printf("write: %llum vertices\n", i / 1024 / 1024);
     }
 
     // Write normals
@@ -213,6 +213,7 @@ static void saveToObj(const std::string& filename, std::vector<float>& vertices,
                 << indices[i] + 1  << " "
                 << indices[i + 1] + 1 << " "
                 << indices[i + 2] + 1 << "\n";
+        if (i % (1024 * 1024) == 0) printf("write: %llum indices\n", i / 1024 / 1024);
     }
 
     outFile.close();
@@ -251,7 +252,7 @@ int bigmodel() {
     generatePlane(vertices, indices, GRID_SIZE);
     printf("generate plane done\n");
 
-    // saveToObj("./plane30m.obj", vertices, indices);
+    // saveToObj("./plane100m.obj", vertices, indices);
     // printf("save obj file done\n");
 
     // Create VBO and VAO
