@@ -1,0 +1,22 @@
+
+cmake_minimum_required(VERSION 3.5)
+
+set(CMAKE_CXX_STANDARD 17)
+
+
+# prj and exe
+set(PRJ_NAME benchmarkglfw)
+project(${PRJ_NAME})
+add_executable(${PRJ_NAME})
+
+
+# link
+add_subdirectory(./thirdparty/glfw)
+find_package(OpenGL REQUIRED)
+target_link_libraries(${PRJ_NAME} glfw OpenGL::GL)
+
+
+# source and include
+file(GLOB src ./src/*.cpp)
+target_sources(${PRJ_NAME} PRIVATE ${src})
+target_include_directories(${PRJ_NAME} PRIVATE ./thirdparty ./src)
