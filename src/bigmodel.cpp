@@ -7,8 +7,8 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <fstream>
 #include "linmath.h"
-
 
 
 // benchmark result
@@ -28,6 +28,7 @@
 // Plane generation constants
 // const int GRID_SIZE = 4000; // 30 million triangles -> fps=60, resolution not matter
 // const int GRID_SIZE = 5000; // 47 million triangles -> fps=54, resolution not matter
+// const int GRID_SIZE = 5150; // 50 million triangles -> fps=51, resolution not matter
 // const int GRID_SIZE = 5920; // 66 million triangles -> fps=39, resolution not matter
 const int GRID_SIZE = 7271; // 100 million triangles -> fps=26, resolution not matter
 
@@ -164,6 +165,61 @@ void generatePlane(std::vector<float>& vertices, std::vector<unsigned int>& indi
 }
 
 
+
+static void saveToObj(const std::string& filename, std::vector<float>& vertices, std::vector<unsigned int>& indices) {
+
+    size_t nnode = vertices.size() / 3;
+    std::vector<float> normals;
+    fastVectorResize(normals, nnode * 3);
+    for (size_t i = 0; i < nnode; i++) {
+        normals[i * 3 + 0] = 0;
+        normals[i * 3 + 1] = 0;
+        normals[i * 3 + 2] = 1.0;
+    }
+
+    std::ofstream outFile(filename);
+
+    if (!outFile.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return;
+    }
+
+    // Write vertices
+    for (size_t i = 0; i < vertices.size(); i += 3) {
+        outFile << "v " 
+                << vertices[i] << " " 
+                << vertices[i + 1] << " " 
+                << vertices[i + 2] << "\n";
+        
+        if (i % (1024 * 1024) == 0) printf("write: %lldm vertices\n", i / 1024 / 1024);
+    }
+
+    // Write normals
+    // for (size_t i = 0; i < normals.size(); i += 3) {
+    //     outFile << "vn " 
+    //             << normals[i] << " " 
+    //             << normals[i + 1] << " " 
+    //             << normals[i + 2] << "\n";
+    // }
+
+    // Write faces (indices)
+    for (size_t i = 0; i < indices.size(); i += 3) {
+        // OBJ uses 1-based indexing
+        // outFile << "f " 
+        //         << indices[i] + 1 << "//" << indices[i] + 1 << " "
+        //         << indices[i + 1] + 1 << "//" << indices[i + 1] + 1 << " "
+        //         << indices[i + 2] + 1 << "//" << indices[i + 2] + 1 << "\n";
+        outFile << "f " 
+                << indices[i] + 1  << " "
+                << indices[i + 1] + 1 << " "
+                << indices[i + 2] + 1 << "\n";
+    }
+
+    outFile.close();
+
+    std::cout << "Successfully saved to " << filename << std::endl;
+}
+
 int bigmodel() {
     // Initialize GLFW
     if (!glfwInit()) {
@@ -194,6 +250,9 @@ int bigmodel() {
     std::vector<unsigned int> indices;
     generatePlane(vertices, indices, GRID_SIZE);
     printf("generate plane done\n");
+
+    // saveToObj("./plane30m.obj", vertices, indices);
+    // printf("save obj file done\n");
 
     // Create VBO and VAO
     GLuint VBO, VAO, EBO;
