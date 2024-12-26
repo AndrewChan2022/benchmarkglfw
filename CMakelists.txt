@@ -9,6 +9,13 @@ set(PRJ_NAME benchmarkglfw)
 project(${PRJ_NAME})
 add_executable(${PRJ_NAME})
 
+### need after prj
+if (MSVC)
+    message(STATUS "**********msvc")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+else()
+    message(STATUS "**********not msvc")
+endif()
 
 # link
 add_subdirectory(./thirdparty/glfw)
