@@ -15,6 +15,9 @@ set benchmarkglfw as start project and run,  the title will show the FPS
 
 ## benchmark result
 
+This task is bandwidth-bound, simply depend on memory bandwidth, i.e. the last column.
+
+
 | Device             | Triangles | FPS | GPU Memory | GPU FLOPs   | GPU Memory Bandwidth |
 |--------------------|-----------|-----|------------|-------------|----------------------|
 | Desktop GTX 1660   | 100M      | 26  | 6 GB       | 5.4 TFLOPs  | 192 GB/s             |
