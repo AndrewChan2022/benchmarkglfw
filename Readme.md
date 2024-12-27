@@ -15,14 +15,14 @@ set benchmarkglfw as start project and run,  the title will show the FPS
 
 ## benchmark result
 
-| Device             | Triangles     | FPS  |
-|--------------------|---------------|------|
-| Desktop GTX 1660   | 100M          | 26   |
-| Desktop GTX 1660   | 66M           | 39   |
-| Desktop GTX 1660   | 47M           | 54   |
-| Desktop GTX 1660   | 30M           | 60   |
-| Laptop RTX 3080    | 100M          | 55   |
-| Laptop Intel       | 100M          | 11   |
+| Device             | Triangles | FPS | GPU Memory | GPU FLOPs   |
+|--------------------|-----------|-----|------------|-------------|
+| Desktop GTX 1660   | 100M      | 26  | 6 GB       | 5.4 TFLOPs  |
+| Desktop GTX 1660   | 66M       | 39  | 6 GB       | 5.4 TFLOPs  |
+| Desktop GTX 1660   | 47M       | 54  | 6 GB       | 5.4 TFLOPs  |
+| Desktop GTX 1660   | 30M       | 60  | 6 GB       | 5.4 TFLOPs  |
+| Laptop RTX 3080    | 100M      | 55  | 16 GB      | 29.77 TFLOPs|
+| Laptop Intel       | 100M      | 11  | 8 GB       | 0.3 TFLOPs  |
 
 
 ## generate model file
